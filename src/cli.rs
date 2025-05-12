@@ -13,6 +13,10 @@ pub struct Cli {
     pub config: Option<PathBuf>,
 
     /// Turn debugging information on
-    #[arg(short, long, action = clap::ArgAction::Count)]
-    pub debug: u8,
+    #[arg(short = 'd', long = "debug", help = "Enable debug logging")]
+    pub debug: bool,
+
+    /// Turn verbose information on
+    #[arg(short = 'v', long = "verbose", help = "Enable verbose logging")]
+    pub verbose: bool,
 }

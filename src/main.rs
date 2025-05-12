@@ -1,25 +1,37 @@
+use tracing::{debug, Level};
+use tracing_subscriber::FmtSubscriber;
+
 mod cli;
 
 use cli::Cli;
 use clap::Parser;
 
 fn main() {
+    // Parse CLI
     let cli = Cli::parse();
 
+    // Setup logger
+    let subscriber = FmtSubscriber::builder()
+        .with_max_level(if cli.debug {
+            Level::DEBUG
+        } else if cli.verbose {
+            Level::INFO
+        } else {
+            Level::ERROR
+        })
+        .without_time()
+        .finish();
+
+    tracing::subscriber::set_global_default(subscriber)
+        .expect("setting default subscriber failed");
+
+    debug!("Parsed CLI flags");
+
     if let Some(project_path) = cli.project.as_deref() {
-        println!("Value for project: {}", project_path.display());
+        debug!("Value for project: {}", project_path.display());
     }
 
     if let Some(config_path) = cli.config.as_deref() {
-        println!("Value for config: {}", config_path.display());
-    }
-
-    // You can see how many times a particular flag or argument occurred
-    // Note, only flags can have multiple occurrences
-    match cli.debug {
-        0 => println!("Debug mode is off"),
-        1 => println!("Debug mode is kind of on"),
-        2 => println!("Debug mode is on"),
-        _ => println!("Don't be crazy"),
+        debug!("Value for config: {}", config_path.display());
     }
 }
