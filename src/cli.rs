@@ -6,17 +6,17 @@ use clap::Parser;
 pub struct Cli {
     /// Project file
     #[arg(short, long, value_name = "FILE")]
-    pub project: Option<PathBuf>,
+    pub project: PathBuf,
 
     /// IoC config file
     #[arg(short, long, value_name = "FILE")]
-    pub config: Option<PathBuf>,
+    pub config: PathBuf,
 
     /// Turn debugging information on
-    #[arg(short = 'd', long = "debug", help = "Enable debug logging")]
+    #[arg(short, long, help = "Enable debug logging")]
     pub debug: bool,
 
     /// Turn verbose information on
-    #[arg(short = 'v', long = "verbose", help = "Enable verbose logging")]
+    #[arg(short, long, help = "Enable verbose logging")]
     pub verbose: bool,
 }

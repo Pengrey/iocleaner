@@ -1,24 +1,28 @@
-use tracing::{debug, Level};
+use clap::Parser;
+use tracing::{debug, error, Level};
 use tracing_subscriber::FmtSubscriber;
+use std::error::Error;
 
 mod cli;
+mod handler;
 
 use cli::Cli;
-use clap::Parser;
+use handler::{load_config};
 
-fn main() {
+
+fn main() -> Result<(), Box<dyn Error>> {
     // Parse CLI
     let cli = Cli::parse();
 
     // Setup logger
+    let max_level = match (cli.debug, cli.verbose) {
+        (true, _) => Level::DEBUG,
+        (_, true) => Level::INFO,
+        _ => Level::ERROR,
+    };
+
     let subscriber = FmtSubscriber::builder()
-        .with_max_level(if cli.debug {
-            Level::DEBUG
-        } else if cli.verbose {
-            Level::INFO
-        } else {
-            Level::ERROR
-        })
+        .with_max_level(max_level)
         .without_time()
         .finish();
 
@@ -27,11 +31,14 @@ fn main() {
 
     debug!("Parsed CLI flags");
 
-    if let Some(project_path) = cli.project.as_deref() {
-        debug!("Value for project: {}", project_path.display());
-    }
+    debug!("Value for project: {}", cli.project.display());
 
-    if let Some(config_path) = cli.config.as_deref() {
-        debug!("Value for config: {}", config_path.display());
-    }
+    let config = load_config(&cli.config).map_err(|e| {
+        error!("Failed to parse config file: {}", e);
+        e
+    })?;
+
+    debug!("Read config file for {} IoC", config.name);
+
+    Ok(())
 }
