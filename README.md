@@ -17,6 +17,9 @@ IoC (Indicator of Compromise) remover framework.
 *   **Rust and Cargo:** Install from [rustup.rs](https://rustup.rs/).
 
 ## Installation
+For the latest pre-compiled build, you can go to the [Releases](/releases) page on GitHub.
+
+Alternatively, to build from source:
 
 1.  Clone the repository:
     ```bash
