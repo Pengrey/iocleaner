@@ -19,4 +19,8 @@ pub struct Cli {
     /// Turn verbose information on
     #[arg(short, long, help = "Enable verbose logging")]
     pub verbose: bool,
+
+    /// Turn IoCs presence check off 
+    #[arg(short, long, help = "Ignore IoCs presence check")]
+    pub ignore: bool,
 }
