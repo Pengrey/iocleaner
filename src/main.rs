@@ -7,7 +7,7 @@ mod cli;
 mod handler;
 
 use cli::Cli;
-use handler::{load_config, check_presence};
+use handler::{load_config, check_presence, replace_ioc};
 
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -54,6 +54,15 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    info!("All operations completed successfully.");
+    //// Replace IoCs on the project
+    for ioc in &config.ioc {
+        debug!("Replacing IoC [Name: '{}', Description: '{}']", ioc.name, ioc.description);
+        replace_ioc(&cli.project, &ioc).map_err(|e| {
+            error!("Failed to parse config file: {}", e);
+            exit(1);
+        })?;
+    }
+    info!("Replaced IoCs.");
+    
     exit(0);
 }
