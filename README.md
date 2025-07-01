@@ -42,30 +42,16 @@ Alternatively, to build from source:
 `iocleaner` uses a TOML configuration file. Here's an example targeting [Evilginx v3.3.0](https://github.com/kgretzky/evilginx2/releases/tag/v3.3.0):
 
 ```toml
-name = "Evilginx v3"                                    # Human-readable project name
-description = "IoCs for Evilginx v3.3.0"                # Human-readable name for the IoC
-version = "1.0.0"                                       # Version of the configuration file
+name = "Evilginx v3"                                              # Human-readable project name
+description = "IoCs for Evilginx v3.3.0"                          # Human-readable name for the IoC
+version = "1.0.0"                                                 # Version of the configuration file
 
 [[ioc]]
-path = "core/http_proxy.go"                             # Relative path to the file in the target project
-name = "X-Evilginx Header Part 1"                       # Human-readable name for the IoC
-description = "Removes part 1 of X-Evilginx header."    # Human-readable description for the IoC
-regex = '^\s*o_host := req\.Host$'                      # Regex to find the IoC
-replacement = ""                                        # Replacement string (empty to remove)
-
-[[ioc]]
-path = "core/http_proxy.go"
-name = "X-Evilginx Header Part 2"
-description = "Removes part 2 of X-Evilginx header."
-regex = '^\s*req\.Header\.Set\(p\.getHomeDir\(\), o_host\)$'
-replacement = ""
-
-[[ioc]]
-path = "core/http_proxy.go"
-name = "X-Evilginx Header Part 3"
-description = "Removes part 3 of X-Evilginx header (function definition)."
-regex = '^func \(p \*HttpProxy\) getHomeDir\(\) string \{\n\s*return strings\.Replace\(HOME_DIR, "\.e", "X-E", 1\)\n\}'
-replacement = ""
+path = "core/http_proxy.go"                            		# Relative path to the file in the target project
+name = "X-Evilginx Header"                       		      # Human-readable name for the IoC
+description = "Removes X-Evilginx header."    			      # Human-readable description for the IoC
+regex = '^\s*req\.Header\.Set\(p\.getHomeDir\(\), o_host\)$'	# Regex to find the IoC
+replacement = ""                                        	      # Replacement string (empty to remove)
 ```
 
 **Key Configuration Fields:**
