@@ -52,6 +52,13 @@ name = "X-Evilginx Header"                       		# Human-readable name for the
 description = "Removes X-Evilginx header."    			# Human-readable description for the IoC
 regex = '^\s*req\.Header\.Set\(p\.getHomeDir\(\), o_host\)$'	# Regex to find the IoC
 replacement = ""                                        	# Replacement string (empty to remove)
+
+[[ioc]]
+path = "Makefile"
+name = "Remove fingerprinted libs"
+description = "Makes it so that new libs for the program are fetched"
+regex = '-mod=vendor '
+replacement = ""
 ```
 
 **Key Configuration Fields:**
