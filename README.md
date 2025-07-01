@@ -42,16 +42,16 @@ Alternatively, to build from source:
 `iocleaner` uses a TOML configuration file. Here's an example targeting [Evilginx v3.3.0](https://github.com/kgretzky/evilginx2/releases/tag/v3.3.0):
 
 ```toml
-name = "Evilginx v3"                                              # Human-readable project name
-description = "IoCs for Evilginx v3.3.0"                          # Human-readable name for the IoC
-version = "1.0.0"                                                 # Version of the configuration file
+name = "Evilginx v3"                                    # Human-readable project name
+description = "IoCs for Evilginx v3.3.0"                # Human-readable name for the IoC
+version = "1.0.0"                                       # Version of the configuration file
 
 [[ioc]]
 path = "core/http_proxy.go"                            		# Relative path to the file in the target project
-name = "X-Evilginx Header"                       		      # Human-readable name for the IoC
-description = "Removes X-Evilginx header."    			      # Human-readable description for the IoC
+name = "X-Evilginx Header"                       		# Human-readable name for the IoC
+description = "Removes X-Evilginx header."    			# Human-readable description for the IoC
 regex = '^\s*req\.Header\.Set\(p\.getHomeDir\(\), o_host\)$'	# Regex to find the IoC
-replacement = ""                                        	      # Replacement string (empty to remove)
+replacement = ""                                        	# Replacement string (empty to remove)
 ```
 
 **Key Configuration Fields:**
